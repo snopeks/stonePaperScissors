@@ -5,75 +5,71 @@ import java.util.ArrayList;
 public class Game {
     private Player player1;
     private Player opponent;
-    private static ArrayList<String> winlose;
-    private String winner;
+    private static ArrayList<String> winlose = new ArrayList<>();
+    private String win;
+//    private String result = player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick;
 
+    public void setPlayer1(String name, boolean isComputer){
+        player1 = new Player(name, isComputer);
+    }
     public Player getPlayer1() {
         return player1;
     }
 
     public Player getOpponent() {
-        if(!opponent.isComputer()){
-            System.out.println("your opponent is the computer");
-        } else {
-            System.out.println("your opponent is a human");
-        }
         return opponent;
     }
 
-    public void setOpponent(boolean opponent) {
-        if(!opponent){
-            this.opponent = new Player(true);
-        } else {
-            this.opponent = new Player(false);
-        }
+    public void setOpponent(String name, boolean isComputer) {
+            this.opponent = new Player(name, isComputer);
     }
 
-
     public Game(){
-        winlose = new ArrayList<>();
-        player1 = new Player(false);
-
-        System.out.println("the game is about to begin!");
+//        player1 = new Player(null,  false);
     }
 
     public String evaluatePlay(String p1pick, String p2pick){
-        if(p1pick.equals("rock")){
+        System.out.println(p1pick);
+        player1.setPlayerPick(p1pick);
+        opponent.setPlayerPick(p2pick);
+        System.out.println(p2pick);
+        if(p1pick.equals(p2pick)){
+            win = "TIE GAME";
+            winlose.add("TIE " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
+        }
+        else if (p1pick.equals("rock")){
             if(p2pick.equals("paper")){
-                winner = "winner: player 2";
-            } else if (p2pick.equals("scissors")){
-                winner = "winner: player 1";
-            } else if(p2pick.equals("rock")){
-                winner = "it's a tie!!";
+                win = "YOU LOSE!";
+                winlose.add("LOSS " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
+            } else {
+                win = "YOU WIN!";
+                winlose.add("WIN " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
             }
         }
-        if(p1pick.equals("paper")){
+        else if(p1pick.equals("paper")){
             if(p2pick.equals("rock")){
-                winner = "player 1";
-            } else if (p2pick.equals("scissors")){
-                winner = "player 2";
-            } else if (p2pick.equals("paper")){
-                winner = "it's a tie!";
+                win = "YOU WIN!";
+                winlose.add("WIN " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
+            } else {
+                win = "YOU LOSE!";
+                winlose.add("LOSS " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
             }
         }
-        if(p1pick.equals("scissors")){
+        else if(p1pick.equals("scissors")){
             if(p2pick.equals("rock")){
-                winner = "player 2";
-            } else if(p2pick.equals("paper")){
-                winner = "Player 1";
-            } else if(p2pick.equals("scissors")){
-                winner = "it's a tie!";
+                win = "YOU LOSE!";
+                winlose.add("LOSS " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
+            } else {
+                win = "YOU WIN!";
+                winlose.add("WIN " + player1.getName() + "-" + p1pick + " " + opponent.getName() + "-" + p2pick);
             }
-
         }
-        return winner;
+        return win;
     }
 
-    public static ArrayList<String> getWinlose(){
-        if(winlose == null){
+    public ArrayList<String> getWinlose(){
+        if(winlose.size() == 0){
             System.out.println("no history! play a game to start tracking wins and losses");
-        } else {
-            System.out.println("Here's your history");
         }
         return winlose;
     }

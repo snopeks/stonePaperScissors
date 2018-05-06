@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Player {
 
-    //    private String name;
+    private String name;
     private boolean isComputer;
     private String playerPick;
     private String computerPick;
@@ -26,25 +26,22 @@ public class Player {
     }
 
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-
-    Player(boolean isComputer){
-//        this.name = name;
+    Player(String name, boolean isComputer){
+        this.name = name;
         this.isComputer = isComputer;
     }
 
     public String setPlayerPick(String input){
         playerPick = input;
-        return "you pick " + input;
+        return this.getName() + " picks " + input;
     }
     public String getPlayerPick(){
         return playerPick;
@@ -53,17 +50,18 @@ public class Player {
     public String computerChoice(){
         // computer will choose a random number between 1-3, 1=rock, 2=paper 3=scissors.
         //return the result as a string: e.g. "computer picks rock!"
+        System.out.println(this.getName());
         Random rand = new Random();
         int num = rand.nextInt((3-1) + 1) + 1;
         System.out.println(num);
         if(num == 1){
-            computerPick = "rock";
+            this.setPlayerPick("rock");
         } else if (num == 2){
-            computerPick = "paper";
+            this.setPlayerPick("paper");
         } else if(num == 3){
-            computerPick= "scissors";
+            this.setPlayerPick("scissors");
         }
-        return "Computer chooses " + computerPick;
+        return "Computer chooses " + this.getPlayerPick();
     }
 
 }
