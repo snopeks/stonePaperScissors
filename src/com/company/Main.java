@@ -18,80 +18,24 @@ public class Main {
         //check for invalid inputs
         try{
             while (!input.toLowerCase().equals("quit")) {
-                mainMenu();
+                game.mainMenu();
                 input = sc.nextLine();
                 if (input.equals("history")) {
                     System.out.println("====GAME HISTORY====");
-                    System.out.println(game.getWinlose());
+                    System.out.println(game.getHistory());
                 }
-                if (input.equals("play")) {
-                    System.out.println("in play");
-                    playGame(game, sc);
+                else if (input.equals("play")) {
+                    game.playGame(game, sc);
+                } else if(!input.equals("quit")) {
+                    System.out.println("sorry, didn't recognize that input. Please choose 'play', 'history', or 'quit'");
                 }
-
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-
+        //exit with message and close scanner
         System.out.println("goodbye!");
-
+        sc.close();
     }
-    public static void mainMenu(){
-        //GAME MENU
-        // menu inspired by https://www.experts-exchange.com/questions/22998261/Command-line-menu-Java.html
-        System.out.println("");
-        System.out.println("Welcome to Rock Paper Scissors!");
-        System.out.println("");
-        System.out.println("MAIN MENU");
-        System.out.println("=====");
-        System.out.println("1. Type 'play' to play" );
-        System.out.println("2. Type 'history' to view your history");
-        System.out.println("Type 'quit' to stop playing");
-    }
-    public static void playGame(Game game, Scanner sc){
-        System.out.println("Let's start this game! Please enter your name:");
-        String p1name = sc.nextLine();
-        try{
-            game.setPlayer1(p1name, false);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Type '2 players' for a two player game or 'vs. Computer' to play against the computer");
 
-        //choose an opponent
-        String opponent = sc.nextLine();
-        while (!opponent.equals("2 players") && !opponent.equals("vs. Computer")) {
-            System.out.println("Sorry, that's not right. Please enter '2 players' or 'vs. Computer' to begin the game");
-            opponent = sc.nextLine();
-        }
-        try {
-            if (opponent.equals("2 players")) {
-                System.out.println("enter player 2 name:");
-                String p2name = sc.nextLine();
-                game.setOpponent(p2name, false);
-
-            } else if (opponent.equals("vs. Computer")) {
-                game.setOpponent("computer", true);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        Player p1 = game.getPlayer1();
-        Player p2 = game.getOpponent();
-        System.out.println(p1.getName() + " enter your choice: rock, paper or scissors?");
-        String p1choice = sc.nextLine();
-        System.out.println(p1.setPlayerPick(p1choice));
-        if (!p2.isComputer()) {
-            System.out.println(p2.getName() + " enter your choice: rock, paper or scissors?");
-            String p2choice = sc.nextLine();
-            System.out.println(p2.setPlayerPick(p2choice));
-            System.out.println(game.evaluatePlay(p1.getPlayerPick(), p2.getPlayerPick()));
-        } else {
-            System.out.println(p2.computerChoice());
-            System.out.println(game.evaluatePlay(p1.getPlayerPick(), p2.getPlayerPick()));
-        }
-    }
 }
